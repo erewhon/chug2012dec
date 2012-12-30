@@ -1,0 +1,147 @@
+* Introduction
+
+Some rough org-mode notes from my talk.
+
+* What is Cascalog?
+
+Cascalog is a fully-featured data processing and querying library for
+Clojure or Java. The main use cases for Cascalog are processing "Big
+Data" on top of Hadoop or doing analysis on your local computer.
+Cascalog is a replacement for tools like Pig, Hive, and Cascading and
+operates at a significantly higher level of abstraction than those
+tools.
+
+It lets you query big data on top of Hadoop using Datalog-inspired
+Clojure.
+
+Huh?  So let's start with a quick overview of how we got here...
+
+* In the beginning
+
+In the beginning...  there were the Google papers...
+
+http://research.google.com/archive/gfs.html
+The Google File System, 2003
+
+http://research.google.com/archive/mapreduce.html
+MapReduce: Simplified Data Processing on Large Clusters, 2004
+Jeffrey Dean and Sanjay Ghemawat
+
+http://research.google.com/archive/bigtable.html
+Bigtable: A Distributed Storage System for Structured Data, 2006
+
+2006 Hadoop created.
+
+Let's focus on MapReduce.  Inspired by the functional programming
+functions "map" and "reduce".  
+
+
+
+Now what about Datalog?  It's a relative newcomer.  1977, vs
+SQL's 1974.
+
+A subset of Prolog. (Hence the "log".) You can specify rules, etc.
+Ordering doesn't matter. In many ways, more expressive than SQL,
+especially for recursive queries. (Like an org chart or family tree.)
+
+
+* Cascalog
+
+So what is Cascalog?  Inspired by Datalog, but with Clojure syntax.
+
+What are alternatives?  Pig, Hive.  Pig is imperative (?).  Hive is
+declarative (SQL).
+
+
+
+Why does it rock?  Composable.  And of course, Clojure...
+
+
+http://blog.piccolboni.info/2011/04/looking-for-map-reduce-language.html
+
+* Demo
+
+prereqs:
+lein version
+java -version
+
+setup:
+git clone https://github.com/nathanmarz/cascalog.git
+cd cascalog
+lein deps                 # From a Starbucks it took 1-2 minutes
+lein compile
+lein repl
+(use 'cascalog.playground) (bootstrap)
+(?<- (stdout) [?person] (age ?person 25))
+(?<- (stdout) [?person] (age ?person ?age) (< ?age 30))
+(?<- (stdout) [?person ?age] (age ?person ?age) (< ?age 30))
+(?<- (stdout) [?person] (follows "emily" ?person) (gender ?person "m"))
+
+* Digression into pallet
+
+Pallet is a Clojure-based deployment tool.  And it has a nifty little
+hadoop module.  So let's use that.
+
+It is an alternative to, and competitor with, tools like Puppet and
+Chef.  It is serverless, though.  So kind of like Chef Solo.  (Also:
+think Capistrano.)
+
+No database.
+
+Uses JClouds, but can use Virtualbox and existing nodes.
+
+Crates: unit of config or admin.  Install a package for example
+
+Converge: adjust node count and config.  Lift just config.
+
+* Now what?
+
+You can write external connections.
+
+Can talk to other things... like HBase.  Or an external database.
+
+* Conclusion
+
+We covered a bit of ground. We started off with a superficial overview
+of MapReduce, Hadoop, and where it came from, looked at Cascalog, and
+ended up firing up a cluster.  All in just N lines of Clojure code...
+
+There are some new directions.  For example, Hadoop has batch
+semantics.  HBase offers more database semantics.
+
+Some new things coming out.  Cloudera Impala, based on Google Dremel paper.
+
+* Resources
+
+A link of all resources on my github page, hopefully by the weekend.
+(That so didn't happen... <sigh>)
+
+* Future meeting
+
+Dig a little deeper, do something more real, perhaps throw in a bit of
+virtualization.  Maybe do it as swarm coding?
+
+Also, some interesting things, like Zookeeper for Clojure.  Avout.
+(Bringing transactional memory across cluster.)
+
+* Other Possible links
+
+http://palletops.com/create-hadoop-clusters-the-easy-peasy-way-wit/
+http://hadoop.apache.org/docs/stable/single_node_setup.html
+http://blip.tv/clojure/nathan-marz-cascalog-making-data-processing-fun-again-5970118
+http://palletops.com/pallet-0410-environments-parallel-lift-and-co/
+http://ianrumford.github.com/blog/2012/10/24/first-steps-using-pallet-with-vmfest-and-virtualbox-4-dot-2/
+http://nathanmarz.com/blog/how-to-beat-the-cap-theorem.html
+http://bcbio.wordpress.com/2011/07/04/summarizing-next-gen-sequencing-variation-statistics-with-hadoop-using-cascalog/
+http://clojure-libraries.appspot.com/
+https://github.com/ztellman
+
+
+http://hyperpolyglot.org/lisp
+http://ubercode.de/blog/make-emacs-evaluate-clojure-in-5-minutes
+
+
+https://github.com/fogus/marginalia
+
+http://www.ctdean.com/2012/07/06/cascalog-on-emr.html   running cascalog on AWS Elastic Map Reduce
+http://nathanmarz.com/blog/news-feed-in-38-lines-of-code-using-cascalog.html

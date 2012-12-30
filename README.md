@@ -31,5 +31,6 @@ Clojure Houston User Group - December 2012 meetup on Cascalog
 + [Bigtable: A Distributed Storage System for Structured Data](http://research.google.com/archive/bigtable.html)
 + [Dremel: Interactive Analysis of Web-Scale Datasets](http://research.google.com/pubs/pub36632.html)
 
-# Tutorials
+## Tutorials
+
 + [Cascalog for the Impatient](https://github.com/Quantisan/Impatient)
